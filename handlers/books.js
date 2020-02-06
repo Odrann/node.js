@@ -1,5 +1,6 @@
 const db = require('../models');
 
+// CREATE => WORKS
 exports.store = async (req, res) => {
   try {
     let book = await db.Book.create(req.body);
@@ -16,9 +17,11 @@ exports.store = async (req, res) => {
   }
 };
 
+
+// READ ALL => WORKS
 module.exports.all = async (req, res) => {
   try {
-    let books = await db.book.find(req.query);
+    let books = await db.Book.find();
     return res
       .status(200)
       .json(books);
@@ -32,6 +35,7 @@ module.exports.all = async (req, res) => {
   }
 };
 
+// READ ONE =>WORKS
 module.exports.show = async (req, res) => {
   try {
     let book = await db.Book.findById(req.params.id);
@@ -48,6 +52,29 @@ module.exports.show = async (req, res) => {
   }
 };
 
+//READ FILTERED => 
+module.exports.show = async (req, res) => {
+  try {
+    let book = await db.Book.findById(req.params.id);
+    return res
+      .status(200)
+      .json(book);
+  } catch (err) {
+    return res
+      .status(404)
+      .json({
+        message: 'Oups ! Une erreur est survenue',
+        error: err.message
+      });
+  }
+};
+
+
+
+
+
+
+// UPDATE =>  WORKS
 module.exports.update = async (req, res) => {
   try {
     let book = await db.Book.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
@@ -64,6 +91,7 @@ module.exports.update = async (req, res) => {
   }
 };
 
+// DELETE => WORKS
 module.exports.delete = async (req, res) => {
   try {
     await db.Book.findByIdAndRemove(req.params.id);
