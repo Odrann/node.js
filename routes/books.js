@@ -11,4 +11,10 @@ router.route('/:id')
   .put(onBooks.update)
   .delete(onBooks.delete)
 
+router.route('api/book')
+.get(onBooks.showFiltered)
+
+router.route('/books')
+.get(onBooks.showBestSeller)
+
 module.exports = router;

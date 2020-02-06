@@ -52,10 +52,12 @@ module.exports.show = async (req, res) => {
   }
 };
 
+
 //READ FILTERED => 
-module.exports.show = async (req, res) => {
+module.exports.showFiltered = async (req, res) => {
   try {
-    let book = await db.Book.findById(req.params.id);
+    let book = await db.Book.find({ author : req.query.author});
+        console.log(req.params);
     return res
       .status(200)
       .json(book);
@@ -71,6 +73,23 @@ module.exports.show = async (req, res) => {
 
 
 
+
+// READ BEST SELLERS => 
+module.exports.showBestSeller = async (req, res) => {
+  try {
+    let book = await db.Book.find({isBestSeller :  req.query.isBestSeller});
+    return res
+      .status(200)
+      .json(book);
+  } catch (err) {
+    return res
+      .status(404)
+      .json({
+        message: 'Oups ! Une erreur est survenue',
+        error: err.message
+      });
+  }
+};
 
 
 
